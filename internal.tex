@@ -13,6 +13,9 @@
 }
 
 \setlength{\parindent}{0pt}
+\setlength{\parskip}{20pt}
+
+\def\squad{\hskip2\fontdimen3\font}
 
 
 
@@ -48,6 +51,64 @@ My focus in this exploration is going to be to find a way to generalise
 higher-order derivatives to all $\mathbb{R}$, and not only $\mathbb{Z}^{+}$.
 
 \section{Negative order derivative}
+
+I will follow the same order in which non-integer exponents are first learned,
+firstly, exponentiating to negative integers. The expression
+$\frac{d^{-1}}{dx^{-1}}$ has no obvious meaning, but it can be interpreted
+alike exponents.
+
+Firstly, I will use the notation
+$$\frac{d^\alpha}{dx^\alpha}=D^\alpha \quad \forall \squad \alpha \in
+\mathbb{R}$$
+And for an arbitrary function $f$:
+$$\frac{d^\alpha}{dx^\alpha}\left(f)\right. = D^\alpha f$$
+
+By the definition of the second derivative, given an arbitrary differentiable
+function $f$: $$D^1D^1 f = D^2 f$$ This can also be extended for the notion of
+a third derivative: $$D^1D^2 f = D^3 f$$ It can be extrapolated that, more
+generally,
+\begin{equation}
+	\label{der_sum}
+	D^nD^m = D^{n+m} \quad \forall \squad n,m \in \mathbb{Z}^{+}
+\end{equation}
+
+This leads to defining negative order derivatives like negative order
+exponents, where $x^1 \cdot x^{-1}= x^0$. Similarly, one might say that, by (\ref{der_sum})
+\begin{equation}
+	\label{inv_eq}
+	D^1D^{-1} f = D^0 f
+\end{equation}
+and this leads to having to define what $D^0$ means.
+
+It makes sense intuitively that taking the derivative of a function 0 times
+would leave it without change, but I will check this verifies
+algebraically. This is easy to do, as $$D^1 D^0 f = D^{1+0} f = D^1 f$$
+Removing the $D^1$ from both sides gives the equation $$D^0 f = f$$ which
+proves the intuition that this operation does nothing. This means that the 0th
+power of the derivative operator is the identity operator.
+
+Going back to (\ref{inv_eq}), we now see that
+\begin{equation}
+	\label{inv_eq_simplified}
+	D^1D^{-1} f = f
+\end{equation}
+Since this is true for any arbitrary function $f$, and the order of these two
+doesn't matter, i.e. $D^1D^{-1}=D^{-1}D^1$, we see these two operators are
+inverses of each other, as composing them results in the identity. Luckily, we
+know the inverse to the derivative operator, and that is the integral. To find
+the value of $D^{-1}$, we can take the integral of both sides of
+(\ref{inv_eq_simplified}), leading to the result
+$$
+D^{-1} f = \int f dx
+$$
+
+So far, negative order derivatives seem simple, as they match our intuition very cleanly:
+0th derivatives do nothing, and negative derivatives do the opposite to a derivative.
+
+This matches
+an initial guess one may have, which is that a negative
+derivative would do the opposite of a positive derivative, but it is important
+to verify and formalise this intuition to achieve more accurate results,
 
 \section{Cauchy's formula for repeated integration}
 \subsection{Proof for n $\in \mathbb{Z}$}
