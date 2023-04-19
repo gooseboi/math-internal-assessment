@@ -2,6 +2,8 @@
 
 \usepackage{titling}
 \usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{setspace}
 
 \author{Guzmán Zugnoni}
 \title{Non-integer order derivatives}
@@ -13,10 +15,12 @@
 }
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{20pt}
+%\setlength{\parskip}{20pt}
+\doublespacing
 
 \def\squad{\hskip2\fontdimen3\font}
-
+\DeclareMathOperator{\di}{\,d\!}
+\newcommand*\Eval[3]{\left[#1\right]_{#2}^{#3}}
 
 
 
@@ -52,16 +56,17 @@ higher-order derivatives to all $\mathbb{R}$, and not only $\mathbb{Z}^{+}$.
 
 \section{Negative order derivative}
 
-I will follow the same order in which non-integer exponents are first learned,
+The most natural order to start defining non-integral derivatives is the same
+order in which non-integer exponents are first learned,
 firstly, exponentiating to negative integers. The expression
 $\frac{d^{-1}}{dx^{-1}}$ has no obvious meaning, but it can be interpreted
 alike exponents.
 
-Firstly, I will use the notation
+Firstly, throughout the exploration, I will use the notation
 $$\frac{d^\alpha}{dx^\alpha}=D^\alpha \quad \forall \squad \alpha \in
 \mathbb{R}$$
 And for an arbitrary function $f$:
-$$\frac{d^\alpha}{dx^\alpha}\left(f)\right. = D^\alpha f$$
+$$\frac{d^\alpha}{dx^\alpha}\left(f\right) = D^\alpha f$$
 
 By the definition of the second derivative, given an arbitrary differentiable
 function $f$: $$D^1D^1 f = D^2 f$$ This can also be extended for the notion of
@@ -105,11 +110,93 @@ $$
 So far, negative order derivatives seem simple, as they match our intuition very cleanly:
 0th derivatives do nothing, and negative derivatives do the opposite to a derivative.
 
-This matches
-an initial guess one may have, which is that a negative
-derivative would do the opposite of a positive derivative, but it is important
-to verify and formalise this intuition to achieve more accurate results,
+This matches an initial guess one may have, which is that a negative derivative
+would do the opposite of a positive derivative, but it is important to verify
+and formalise this intuition to achieve more accurate results.
+
+After learning about negative derivatives, one may see that they are hard to
+evaluate, as a consequence of them involving integrals.
+
+For instance, taking $f = \frac{8}{(x^2+1)^3}$:
+$$
+D^2\left(\frac{8}{(x^2+1)^3}\right) =
+D\left(\frac{-48x}{(x^2+1)^4}\right) =
+\frac{48x(7x^2-1)}{(x^2+1)^5}
+$$
+
+Despite there not being a general formula for the nth derivative of an
+arbitrary function, one can easily arrive at the desired derivative by
+performing repeated derivatives.
+
+However, when trying to do the opposite, i.e. $D^{-2}$, the process is much
+harder:
+
+$$
+D^{-2}\left(\frac{8}{(x^2+1)^3}\right) =
+D^{-1}\left(\frac{x\left(3x^2+5\right)}{\left(x^2+1\right)^2} +
+3\tan^{-1}{x} + C_1 \right)
+$$
+
+And performing the process of integration again will result in an even more
+complicated result, with which performing repeated integration becomes
+exponentially harder. Therefore, there is motivation to find a suitable
+alternative to performing the integral every time, and a method to do this is
+known as Cauchy's formula for repeated integration.
 
 \section{Cauchy's formula for repeated integration}
-\subsection{Proof for n $\in \mathbb{Z}$}
+
+The motivation for this formula as finding areas of threedimensional objects,
+where integration may be performed twice to find the volume of an
+object. However this formula may be used for the purposes of this investigation.
+
+Cauchy's formula for repeated intregration is given thusly:
+$$
+\int_a^x
+\int_a^{t_1}
+\int_a^{t_2}
+\ldots
+\int_a^{t_n}f\left(t_n\right) dt_n \ldots dt_2 dt_1
+=
+\frac{1}{(n-1)!}\int_a^x\left(x-t\right)^{n-1}f\left(t\right)dt.
+$$
+where here $a$ is an arbitrary constant, alike the constant of integration.
+
+This formula may be used to calculate the nth antiderivative for any function
+easily. I will give a few examples of this method in use, calculating them both
+by the normal method and Cauchy's Formula. For the sake of ease, I will assume
+appropiate initial conditions such that all constant of integration will be
+$0$.
+
+Firstly, I will calculate $D^{-4} x^2$, both by the normal method of
+integration and through Cauchy's formula.
+
+\begin{itemize}
+	\item{$
+			\iiiint x^2 \di x\di x\di x\di x =
+			\iiint \frac{x^3}{3} \di x\di x\di x =
+			\iint \frac{x^4}{12}\di x\di x =
+			\int \frac{x^5}{60} \di x =
+			\frac{x^6}{360}
+		$}
+	\item{$
+			\frac{1}{3!}\int_0^x \left(x-t\right)^3 x^2 \di t =
+			\frac{1}{6}\int_0^x \left(x^3 - 3x^2t + 3xt^2 - t^3\right)t^2 \di t =
+			\frac{1}{6}\int_0^x x^3 - 3x^2t^3 + 3xt^4 - t^5 \di t =
+			\frac{1}{6} \Eval{x^3t - \frac{3x^2t^4}{4} + \frac{3xt^5}{5} - \frac{t^6}{6}}{0}{x} =
+			\frac{1}{6} \left(x^4 - \frac{3}{4} x^6 + \frac{3}{5} x^6 - \frac{1}{6}x^6 \right) =
+			\frac{1}{6} \left(\frac{x^6}{4} \right) =
+			\frac{x^6}{24}
+		$}
+\end{itemize}
+
+\subsection{Proof for $n \in \mathbb{Z}$}
+
+This may be proven for $n \in \mathbb{Z}^+$ by induction. The base is n=1,
+where it should simply be equal to $\int f\left(x\right)dx$:
+\begin{multline*}
+	\frac{1}{(1-1)!}\int_a^x\left(x-t\right)^{1-1}f\left(t\right)dt\\
+	\frac{1}{(0)!}\int_a^x\left(x-t\right)^{0}f\left(t\right)dt\\
+	\int_a^xf\left(t\right)dt\\
+\end{multline*}
+
 \end{document}
