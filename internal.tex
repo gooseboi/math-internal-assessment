@@ -4,7 +4,12 @@
 \usepackage{titling}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{setspace}
+\usepackage{mathtools}
+\usepackage{helvet}
+
 
 \author{Guzmán Zugnoni}
 \title{Non-integer order derivatives}
@@ -170,36 +175,122 @@ by the normal method and Cauchy's Formula. For the sake of ease, I will assume
 appropiate initial conditions such that all constant of integration will be
 $0$.
 
-Firstly, I will calculate $D^{-4} x^2$, both by the normal method of
-integration and through Cauchy's formula.
-
-\begin{itemize}
-	\item{$
-			\iiiint x^2 \di x\di x\di x\di x =
-			\iiint \frac{x^3}{3} \di x\di x\di x =
-			\iint \frac{x^4}{12}\di x\di x =
-			\int \frac{x^5}{60} \di x =
-			\frac{x^6}{360}
-		$}
-	\item{$
-			\frac{1}{3!}\int_0^x \left(x-t\right)^3 x^2 \di t =
-			\frac{1}{6}\int_0^x \left(x^3 - 3x^2t + 3xt^2 - t^3\right)t^2 \di t =
-			\frac{1}{6}\int_0^x x^3 - 3x^2t^3 + 3xt^4 - t^5 \di t =
-			\frac{1}{6} \Eval{x^3t - \frac{3x^2t^4}{4} + \frac{3xt^5}{5} - \frac{t^6}{6}}{0}{x} =
-			\frac{1}{6} \left(x^4 - \frac{3}{4} x^6 + \frac{3}{5} x^6 - \frac{1}{6}x^6 \right) =
-			\frac{1}{6} \left(\frac{x^6}{4} \right) =
-			\frac{x^6}{24}
-		$}
-\end{itemize}
 
 \subsection{Proof for $n \in \mathbb{Z}$}
 
-This may be proven for $n \in \mathbb{Z}^+$ by induction. The base is n=1,
-where it should simply be equal to $\int f\left(x\right)dx$:
-\begin{multline*}
-	\frac{1}{(1-1)!}\int_a^x\left(x-t\right)^{1-1}f\left(t\right)dt\\
-	\frac{1}{(0)!}\int_a^x\left(x-t\right)^{0}f\left(t\right)dt\\
-	\int_a^xf\left(t\right)dt\\
-\end{multline*}
+This may be proven for $n \in \mathbb{Z}^+$ by induction, for an arbitrary
+integrable function $f$. The base is n=1, where it should simply be equal to
+$\int
+f\left(x\right)dx$:
+$$
+\frac{1}{(1-1)!}\int_a^x\left(x-t\right)^{1-1}f\left(t\right)dt =
+\frac{1}{(0)!}\int_a^x\left(x-t\right)^{0}f\left(t\right)dt =
+\int_a^xf\left(t\right)dt
+$$
+
+Thus, let $P_n$ be the proposition that Cauchy's formula holds for $n$. We may
+assume that $P_k$ holds for some $k \in \mathbb{Z}^+$, and prove $P_{k+1}$
+holds.
+
+The formula for $n = k + 1$ would be:
+$$
+\int_a^x
+\boxed{
+\int_a^{t_1}
+\int_a^{t_2}
+\ldots
+\int_a^{t_{k-1}}
+\int_a^{t_k}f\left(t_{k+1}\right) \di t_{k+1}\di t_k\di t_{k-1} \ldots \di t_2}\di t_1
+$$
+The boxed region contains $k$ integrals, and thus, since $P_k$ holds, we may apply
+Cauchy's formula to the integrals, which would result in the expression:
+$$
+\int_a^x
+\frac{1}{(n-1)!}\int_a^{t_1}\left(t_1-t\right)^{n-1}f\left(t\right)\di t\di t_1
+$$
+
+Since when substituting $k+1$ in the formula the $x-t$ expression is raised to
+the $k$th power, it is a good idea to achieve this. To do this, we must raise
+the current power by 1, which may be achievable by writing it as a derivative,
+like so:
+$$
+\int_a^x
+\frac{1}{(n-1)!}\int_a^{t_1}\frac{\di}{\di t_1}\left[\frac{1}{n}\left(t_1-t\right)^nf\left(t\right)\right]\di t\di t_1
+$$
+This expression is very similar to the Fundamental Theorem of Calculus, which states:
+\begin{equation}
+	\label{fundamental_theorem_of_calculus}
+\frac{\di}{\di x}\int_a^bf(x)\di x = \int_a^b\frac{\di}{\di x}f(x) \di x = f(b)- f(a)
+\end{equation}
+Applying (\ref{fundamental_theorem_of_calculus}) results in the expression becoming
+\begin{gather*}
+\int_a^x
+\frac{1}{(n-1)!}\frac{\di}{\di t_1}\left[\int_a^{t_1}\frac{1}{n}\left(t_1-t\right)^nf(t)\di t\right]\di t_1 \\
+\int_a^x
+\frac{\di}{\di t_1}\left[\frac{1}{(n-1)!}\int_a^{t_1}\frac{1}{n}\left(t_1-t\right)^nf(t)\di t\right]\di t_1 \\
+\int_a^x
+\frac{\di}{\di t_1}\left[\frac{1}{(n-1)!}\frac{1}{n}\int_a^{t_1}\left(t_1-t\right)^nf(t)\di t\right]\di t_1 \\
+\int_a^x
+\frac{\di}{\di t_1}\left[\frac{1}{n!}\int_a^{t_1}\left(t_1-t\right)^nf(t)\di t\right]\di t_1
+\end{gather*}
+Applying(\ref{fundamental_theorem_of_calculus}) again eliminates the outer integral,
+and results in
+$$
+\frac{1}{n!}\int_a^x\left(x-t\right)^nf(t)\di t -
+\frac{1}{n!}\int_a^a\left(a-t\right)^nf(t)\di t =
+\frac{1}{n!}\int_a^x\left(t_1-t\right)^nf(t)\di t
+$$
+which is $P_{k+1}$, and therefore by the principle of mathematical induction,
+$$
+\left(P_k \implies P_{k+1} \land P_1\right)
+\implies P_n \forall n \in \mathbb{Z}^+
+\qquad \blacksquare
+$$
+
+\subsection{Example}
+As an example of how to use this formula, I will calculate a simple antiderivative,
+that of $x^2$. Firstly, using the simple method of integration.
+\begin{align*}
+	&\iiiint x^2 \di x\di x\di x\di x \\
+	&=\iiint \frac{x^3}{3} \di x\di x\di x \\
+	&=\iint \frac{x^4}{12}\di x\di x \\
+	&=\int \frac{x^5}{60} \di x \\
+	&=\frac{x^6}{360}
+\end{align*}
+And secondly, using Cauchy's formula for integration:
+\begin{gather*}
+	\frac{1}{3!}\int_0^x \left(x-t\right)^3 t^2 \di t \\
+	\frac{1}{6}\int_0^x \left(x^3 - 3x^2t + 3xt^2 - t^3\right)t^2 \di t \\
+	\frac{1}{6}\int_0^x x^3t^2 - 3x^2t^3 + 3xt^4 - t^5 \di t \\
+	\frac{1}{6} \Eval{\frac{x^3t^3}{3} - \frac{3x^2t^4}{4} + \frac{3xt^5}{5} - \frac{t^6}{6}}{0}{x} \\
+	\frac{1}{6} \left(\frac{1}{3}x^6 - \frac{3}{4} x^6 + \frac{3}{5} x^6 - \frac{1}{6}x^6 \right) \\
+	\frac{1}{6} \left(\frac{x^6}{60} \right) \\
+	\frac{x^6}{360}
+\end{gather*}
+
+The results are the same and thus the formula seems to hold for a simple
+function. However, one may realise that the second solution is in fact longer
+and more complex than the traditional way of evaluating the integral. This is
+much more evident, for instance in the example of $D^{-3} x^2$, where $\iiint
+sin x \di x$ is rather easy to evaluate because of the simplicity and cyclical
+nature of its antiderivatives, whereas $\frac{1}{2}\int \left(x-t\right)^2 \sin
+t\di t$ involves much more work and complex techniques. This is a result of the
+fact that integrals many times become much more difficult to evaluate when more
+terms are introduced. Thus, despite the fact that this compresseses the work
+needed to be done to one integral, the complexity is much greater.
+
+This means that Cauchy's formula is in fact, not a practical way to calculate
+negative order derivatives, even though it seems like it would be. Cauchy's
+formula however has other uses cases, in places like applied mathematics for
+calculating integrals numerically for instance, but most importantly for this
+exploration, this formula can be generalised for non-integer integrals.
+
+\subsection{Generalising Cauchy's integral formula for $x \in \mathbb{R}$}
+
+\section{Fractional calculus}
+\subsection{The differintegral operator}
+\subsection{Properties of fractional derivatives}
+\subsection{Graphical interpretations of fractional derivatives}
+\subsubsection{Non-locality}
 
 \end{document}
