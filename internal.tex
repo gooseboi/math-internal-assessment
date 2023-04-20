@@ -68,7 +68,7 @@ alike exponents.
 Firstly, throughout the exploration, I will use the notation
 $$\frac{d^\alpha}{dx^\alpha}=D^\alpha \quad \forall \squad \alpha \in
 \mathbb{R}$$
-And for an arbitrary function $f$:
+And for an arbitrary integrable function $f$:
 $$\frac{d^\alpha}{dx^\alpha}\left(f\right) = D^\alpha f$$
 
 By the definition of the second derivative, given an arbitrary differentiable
@@ -100,12 +100,12 @@ Going back to (\ref{inv_eq}), we now see that
 	\label{inv_eq_simplified}
 	D^1D^{-1} f = f
 \end{equation}
-Since this is true for any arbitrary function $f$, and the order of these two
-doesn't matter, i.e. $D^1D^{-1}=D^{-1}D^1$, we see these two operators are
-inverses of each other, as composing them results in the identity. Luckily, we
-know the inverse to the derivative operator, and that is the integral. To find
-the value of $D^{-1}$, we can take the integral of both sides of
-(\ref{inv_eq_simplified}), leading to the result
+Since this is true for any arbitrary differentiable function $f$, and the order
+of these two doesn't matter, i.e. $D^1D^{-1}=D^{-1}D^1$, we see these two
+operators are inverses of each other, as composing them results in the
+identity. Luckily, we know the inverse to the derivative operator, and that is
+the integral. To find the value of $D^{-1}$, we can take the integral of both
+sides of (\ref{inv_eq_simplified}), leading to the result
 $$
 D^{-1} f = \int f dx
 $$
@@ -148,7 +148,7 @@ known as Cauchy's formula for repeated integration.
 
 \section{Cauchy's formula for repeated integration}
 
-The motivation for this formula as finding areas of threedimensional objects,
+The motivation for this formula is finding areas of threedimensional objects,
 where integration may be performed twice to find the volume of an
 object. However this formula may be used for the purposes of this investigation.
 
