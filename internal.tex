@@ -56,8 +56,8 @@ exponentiation, which is the process of repeated multiplication, where
 similarly $x \cdot x = x^2$. However, for exponentiation, we learn that it is
 possible to exponentiate to non-integral, and non-positive powers, such as
 $x^{-1}=\frac{1}{x}$ or $x^\frac{1}{2} = \sqrt{x}$, which have meaning and are
-useful in solving mathematic problems, and this led me to think about if there
-existed a similar notion regarding derivatives.
+useful in solving mathematical problems, and this led me to think about if
+there existed a similar notion regarding derivatives.
 
 My focus in this exploration is going to be to find a way to generalise
 higher-order derivatives to all $\mathbb{R}$, and not only $\mathbb{Z}^{+}$.
@@ -65,28 +65,28 @@ higher-order derivatives to all $\mathbb{R}$, and not only $\mathbb{Z}^{+}$.
 \section{Negative order derivative}
 
 The most natural order to start defining non-integral derivatives is the same
-order in which non-integer exponents are first learned,
-firstly, exponentiating to negative integers. The expression
-$\frac{d^{-1}}{dx^{-1}}$ has no obvious meaning, but it can be interpreted
-alike exponents.
+order in which non-integer exponents are first learned: exponentiating to
+negative integers. The expression $\frac{d^{-1}}{dx^{-1}}$ has no obvious
+meaning, but it can be interpreted like one interprets exponents
 
 Firstly, throughout the exploration, I will use the notation
-$$\frac{d^\alpha}{dx^\alpha}=D^\alpha \quad \forall \squad \alpha \in
-\mathbb{R}$$
-And for an arbitrary integrable function $f$:
+$$  \frac{d^\alpha}{dx^\alpha}=\
+	D^\alpha \quad \forall \squad \alpha \in \mathbb{R}$$
+And for an arbitrary $\alpha$-differentiable function $f$:
 $$\frac{d^\alpha}{dx^\alpha}\left(f\right) = D^\alpha f$$
 
-By the definition of the second derivative, given an arbitrary differentiable
-function $f$: $$D^1D^1 f = D^2 f$$ This can also be extended for the notion of
-a third derivative: $$D^1D^2 f = D^3 f$$ It can be extrapolated that, more
-generally,
+Now using this notation, by the definition of the second derivative, given an
+arbitrary differentiable function $f$: $$D^1D^1 f = D^2 f$$ This can also be
+extended for the notion of a third derivative: $$D^1D^2 f = D^3 f$$ It can be
+extrapolated that, more generally,
 \begin{equation}
 	\label{der_sum}
 	D^nD^m = D^{n+m} \quad \forall \squad n,m \in \mathbb{Z}^{+}
 \end{equation}
 
 This leads to defining negative order derivatives like negative order
-exponents, where $x^1 \cdot x^{-1}= x^0$. Similarly, one might say that, by (\ref{der_sum})
+exponents, where $x^1 \cdot x^{-1}= x^0$. Similarly, one might say that, by
+(\ref{der_sum})
 \begin{equation}
 	\label{inv_eq}
 	D^1D^{-1} f = D^0 f
@@ -110,17 +110,21 @@ of these two doesn't matter, i.e. $D^1D^{-1}=D^{-1}D^1$, we see these two
 operators are inverses of each other, as composing them results in the
 identity. Luckily, we know the inverse to the derivative operator, and that is
 the integral. To find the value of $D^{-1}$, we can take the integral of both
-sides of (\ref{inv_eq_simplified}), leading to the result
+sides of (\ref{inv_eq_simplified}), leading to
 $$
 D^{-1} f = \int f dx
 $$
 
-So far, negative order derivatives seem simple, as they match our intuition very cleanly:
-0th derivatives do nothing, and negative derivatives do the opposite to a derivative.
+Which, when applying $D^{-1}$ n times, leads to the result
+$$
+D^{-n} f = \underbrace{\int \int \ldots \int}_\text{$n$ times}
+		   f\left(t\right) \di t \qquad \forall n \in \mathbb{Z}
+$$
 
-This matches an initial guess one may have, which is that a negative derivative
-would do the opposite of a positive derivative, but it is important to verify
-and formalise this intuition to achieve more accurate results.
+So far, negative order derivatives seem simple, as they match an initial
+intuition very cleanly: 0th derivatives do nothing, and negative derivatives do
+the opposite to a derivative. While this matches the intuition, this might have
+been wrong, and it is important to verify this formally
 
 After learning about negative derivatives, one may see that they are hard to
 evaluate, as a consequence of them involving integrals.
@@ -170,10 +174,10 @@ $$
 where here $a$ is an arbitrary constant, alike the constant of integration.
 
 This formula may be used to calculate the nth antiderivative for any function
-easily. I will give a few examples of this method in use, calculating them both
-by the normal method and Cauchy's Formula. For the sake of ease, I will assume
-appropiate initial conditions such that all constant of integration will be
-$0$.
+performing a single integration. I will give a few examples of this method in
+use, calculating them both by the normal method and Cauchy's Formula. For the
+sake of ease, I will assume appropiate initial conditions such that all
+constant of integration will be $0$.
 
 
 \subsection{Proof for $n \in \mathbb{Z}$}
@@ -271,13 +275,14 @@ And secondly, using Cauchy's formula for integration:
 The results are the same and thus the formula seems to hold for a simple
 function. However, one may realise that the second solution is in fact longer
 and more complex than the traditional way of evaluating the integral. This is
-much more evident, for instance in the example of $D^{-3} x^2$, where $\iiint
-sin x \di x$ is rather easy to evaluate because of the simplicity and cyclical
-nature of its antiderivatives, whereas $\frac{1}{2}\int \left(x-t\right)^2 \sin
-t\di t$ involves much more work and complex techniques. This is a result of the
-fact that integrals many times become much more difficult to evaluate when more
-terms are introduced. Thus, despite the fact that this compresseses the work
-needed to be done to one integral, the complexity is much greater.
+much more evident, for instance in the example of $D^{-3} \sin{x}$, where
+$\iiint \sin{x} \di x$ is rather easy to evaluate because of the simplicity and
+cyclical nature of its antiderivatives, whereas $\frac{1}{2}\int
+\left(x-t\right)^2 \sin t\di t$ involves much more work and complex
+techniques. This is a result of the fact that integrals many times become much
+more difficult to evaluate when more terms are introduced. Thus, despite the
+fact that this compresseses the work needed to be done to one integral, the
+complexity is much greater.
 
 This means that Cauchy's formula is in fact, not a practical way to calculate
 negative order derivatives, even though it seems like it would be. Cauchy's
