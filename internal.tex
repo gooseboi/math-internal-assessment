@@ -293,8 +293,45 @@ exploration, this formula can be generalised for non-integer integrals.
 
 \subsection{Generalising Cauchy's integral formula for $x \in \mathbb{R}$}
 
+Now that an easy way to perform the inverse of a derivative has been
+established, it is reasonable to assume that this might make it possible to
+extend this operation to all reals.
+
+This is true, as it is possible, however, a slight consideration must be made.
+The formula for repeated integration is thus
+
+$$
+D^{-n}f = \frac{1}{n!}\int_a^{t_1}\left(t_1-t\right)^nf(t)\di t
+$$
+
+However, if one tries to substitute something that is not a positive integer
+for n, one comes across the problem of having to evaluate
+$\frac{1}{n!}$. Generalising factorials to all $\mathbb{R}$ is complex, involving
+techniques in real analysis. However, since this is not the focus of this exploration,
+I will use the result without proving it. This generalisation is named $\Gamma(x)$, and its formula is given as
+$$
+\Gamma(x)=\int_0^{\infty} e^{-t}t^{x-1}dt = (x-1)!
+$$
+Having this function, we can thus express the formula for repeated integration as
+$$
+D^{-\alpha}f = \frac{1}{\Gamma\left(\alpha+1\right)}\int_a^{t_1}\left(t_1-t\right)^\alpha f(t)\di t
+$$
+
+Having this, we can now define fractional calculus.
+
+
 \section{Fractional calculus}
 \subsection{The differintegral operator}
+Having defined a way to take integrals a non-integral number of times, we can
+now define an operator that can ``take the derivative $\alpha$ times'', where
+$\alpha$ could be any real number
+
+This could be first approached by saying that, to take $D^2$ for instance, we
+may take $D^{-\left(-2\right)}$ and evaluate using Cauchy's formula. However,
+this does not work, as when trying to evaluate $\Gamma(-1)$, we find that it is
+not defined. This is true for all negative integers, and thus we must define an
+operator that can properly take these derivatives.
+
 \subsection{Properties of fractional derivatives}
 \subsection{Graphical interpretations of fractional derivatives}
 \subsubsection{Non-locality}
