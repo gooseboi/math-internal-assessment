@@ -46,8 +46,9 @@
 
 My interest in this topic was born when we learned about the notion of second
 and higher order derivatives. We learnt that there was a meaning and an
-application of taking a derivative multiple times. The notation used to
-represent this operation, however, made me relate it to something else.
+application of taking a derivative multiple times. However, when learning about
+second order derivatives, the notation used to represent this operation made
+me relate it to another concept we had learnt about, exponents.
 
 To represent the second derivative for instance, one writes $\frac{d^2}{dx^2}$,
 which encodes the fact that $\frac{d}{dx}$ was written twice by ``multiplying''
@@ -60,9 +61,9 @@ useful in solving mathematical problems, and this led me to think about if
 there existed a similar notion regarding derivatives.
 
 My focus in this exploration is going to be to find a way to generalise
-higher-order derivatives to all $\mathbb{R}$, and not only $\mathbb{Z}^{+}$.
+higher-order derivatives to all $\mathbb{R}$, and not only $\mathbb{Z}_{\geq0}$.
 
-\section{Negative order derivative}
+\section{Negative order derivatives}
 
 The most natural order to start defining non-integral derivatives is the same
 order in which non-integer exponents are first learned: exponentiating to
@@ -96,9 +97,9 @@ and this leads to having to define what $D^0$ means.
 It makes sense intuitively that taking the derivative of a function 0 times
 would leave it without change, but I will check this verifies
 algebraically. This is easy to do, as $$D^1 D^0 f = D^{1+0} f = D^1 f$$
-Removing the $D^1$ from both sides gives the equation $$D^0 f = f$$ which
-proves the intuition that this operation does nothing. This means that the 0th
-power of the derivative operator is the identity operator.
+Removing the $D^1$ from both sides by taking their integrals gives the equation
+$$D^0 f = f$$ which proves the intuition that this operation does nothing. This
+means that the 0th power of the derivative operator is the identity operator.
 
 Going back to (\ref{inv_eq}), we now see that
 \begin{equation}
@@ -246,7 +247,7 @@ $$
 $$
 which is $P_{k+1}$, and therefore by the principle of mathematical induction,
 $$
-\left(P_k \implies P_{k+1} \land P_1\right)
+\left(\left(P_k \implies P_{k+1}\right) \land P_1\right)
 \implies P_n \forall n \in \mathbb{Z}^+
 \qquad \blacksquare
 $$
