@@ -9,6 +9,7 @@
 \usepackage{setspace}
 \usepackage{mathtools}
 \usepackage{helvet}
+\usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
 
 
 \author{Guzmán Zugnoni}
@@ -29,8 +30,16 @@
 
 \DeclareMathOperator{\di}{\,d\!}
 \newcommand*\Eval[3]{\left[#1\right]_{#2}^{#3}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
-
+\newcommand{\IntSub}[1]{
+{\textup{Substitution:}} \\
+&\quad
+\boxed{\begin{aligned}
+		#1
+\end{aligned}}
+}
 
 
 \begin{document}
@@ -184,7 +193,8 @@ constant of integration will be $0$.
 \subsection{Proof for $n \in \mathbb{Z}$}
 
 This may be proven for $n \in \mathbb{Z}^+$ by induction, for an arbitrary
-integrable function $f$. The base is n=1, where it should simply be equal to
+integrable function $f$. The base case is n=1, where it should simply be equal
+to
 $\int
 f\left(x\right)dx$:
 $$
@@ -192,6 +202,9 @@ $$
 \frac{1}{(0)!}\int_a^x\left(x-t\right)^{0}f\left(t\right)dt =
 \int_a^xf\left(t\right)dt
 $$
+The last integral is the same as the indefinite integral, as it evaluates to
+the antiderivative at $x$, $F(x)$, plus a constant $C$, which in this case is
+$-f(a)$, which means that the base case is true.
 
 Thus, let $P_n$ be the proposition that Cauchy's formula holds for $n$. We may
 assume that $P_k$ holds for some $k \in \mathbb{Z}^+$, and prove $P_{k+1}$
@@ -211,7 +224,7 @@ The boxed region contains $k$ integrals, and thus, since $P_k$ holds, we may app
 Cauchy's formula to the integrals, which would result in the expression:
 $$
 \int_a^x
-\frac{1}{(n-1)!}\int_a^{t_1}\left(t_1-t\right)^{n-1}f\left(t\right)\di t\di t_1
+\frac{1}{(k-1)!}\int_a^{t_1}\left(t_1-t\right)^{k-1}f\left(t\right)\di t\di t_1
 $$
 
 Since when substituting $k+1$ in the formula the $x-t$ expression is raised to
@@ -220,9 +233,11 @@ the current power by 1, which may be achievable by writing it as a derivative,
 like so:
 $$
 \int_a^x
-\frac{1}{(n-1)!}\int_a^{t_1}\frac{\di}{\di t_1}\left[\frac{1}{n}\left(t_1-t\right)^nf\left(t\right)\right]\di t\di t_1
+\frac{1}{(k-1)!}\int_a^{t_1}\frac{\di}{\di t_1}\left[\frac{1}{n}\left(t_1-t\right)^k f\left(t\right)\right]\di t\di t_1
 $$
-This expression is very similar to the Fundamental Theorem of Calculus, which states:
+The $f(t)$ term is included in the derivative, as it is a constant in terms of
+$t_1$. This expression is very similar to the Fundamental Theorem of Calculus,
+which states:
 \begin{equation}
 	\label{fundamental_theorem_of_calculus}
 \frac{\di}{\di x}\int_a^bf(x)\di x = \int_a^b\frac{\di}{\di x}f(x) \di x = f(b)- f(a)
@@ -230,20 +245,20 @@ This expression is very similar to the Fundamental Theorem of Calculus, which st
 Applying (\ref{fundamental_theorem_of_calculus}) results in the expression becoming
 \begin{gather*}
 \int_a^x
-\frac{1}{(n-1)!}\frac{\di}{\di t_1}\left[\int_a^{t_1}\frac{1}{n}\left(t_1-t\right)^nf(t)\di t\right]\di t_1 \\
+\frac{1}{(k-1)!}\frac{\di}{\di t_1}\left[\int_a^{t_1}\frac{1}{n}\left(t_1-t\right)^k f(t)\di t\right]\di t_1 \\
 \int_a^x
-\frac{\di}{\di t_1}\left[\frac{1}{(n-1)!}\int_a^{t_1}\frac{1}{n}\left(t_1-t\right)^nf(t)\di t\right]\di t_1 \\
+\frac{\di}{\di t_1}\left[\frac{1}{(k-1)!}\int_a^{t_1}\frac{1}{n}\left(t_1-t\right)^k f(t)\di t\right]\di t_1 \\
 \int_a^x
-\frac{\di}{\di t_1}\left[\frac{1}{(n-1)!}\frac{1}{n}\int_a^{t_1}\left(t_1-t\right)^nf(t)\di t\right]\di t_1 \\
+\frac{\di}{\di t_1}\left[\frac{1}{(k-1)!}\frac{1}{n}\int_a^{t_1}\left(t_1-t\right)^k f(t)\di t\right]\di t_1 \\
 \int_a^x
-\frac{\di}{\di t_1}\left[\frac{1}{n!}\int_a^{t_1}\left(t_1-t\right)^nf(t)\di t\right]\di t_1
+\frac{\di}{\di t_1}\left[\frac{1}{k!}\int_a^{t_1}\left(t_1-t\right)^k f(t)\di t\right]\di t_1
 \end{gather*}
 Applying(\ref{fundamental_theorem_of_calculus}) again eliminates the outer integral,
 and results in
 $$
-\frac{1}{n!}\int_a^x\left(x-t\right)^nf(t)\di t -
-\frac{1}{n!}\int_a^a\left(a-t\right)^nf(t)\di t =
-\frac{1}{n!}\int_a^x\left(t_1-t\right)^nf(t)\di t
+\frac{1}{k!}\int_a^x\left(x-t\right)^k f(t)\di t -
+\frac{1}{k!}\int_a^a\left(a-t\right)^k f(t)\di t =
+\frac{1}{k!}\int_a^x\left(t_1-t\right)^k f(t)\di t
 $$
 which is $P_{k+1}$, and therefore by the principle of mathematical induction,
 $$
@@ -255,23 +270,24 @@ $$
 \subsection{Example}
 As an example of how to use this formula, I will calculate a simple antiderivative,
 that of $x^2$. Firstly, using the simple method of integration.
-\begin{align*}
-	&\iiiint x^2 \di x\di x\di x\di x \\
+\begin{flalign*}
+	\iiiint x^2 \di x\di x\di x\di x
 	&=\iiint \frac{x^3}{3} \di x\di x\di x \\
 	&=\iint \frac{x^4}{12}\di x\di x \\
 	&=\int \frac{x^5}{60} \di x \\
 	&=\frac{x^6}{360}
-\end{align*}
+\end{flalign*}
 And secondly, using Cauchy's formula for integration:
-\begin{gather*}
-	\frac{1}{3!}\int_0^x \left(x-t\right)^3 t^2 \di t \\
-	\frac{1}{6}\int_0^x \left(x^3 - 3x^2t + 3xt^2 - t^3\right)t^2 \di t \\
-	\frac{1}{6}\int_0^x x^3t^2 - 3x^2t^3 + 3xt^4 - t^5 \di t \\
-	\frac{1}{6} \Eval{\frac{x^3t^3}{3} - \frac{3x^2t^4}{4} + \frac{3xt^5}{5} - \frac{t^6}{6}}{0}{x} \\
-	\frac{1}{6} \left(\frac{1}{3}x^6 - \frac{3}{4} x^6 + \frac{3}{5} x^6 - \frac{1}{6}x^6 \right) \\
-	\frac{1}{6} \left(\frac{x^6}{60} \right) \\
-	\frac{x^6}{360}
-\end{gather*}
+\begin{flalign*}
+	\frac{1}{(4-1)!}\int_0^x \left(x-t\right)^{4-1}	t^2 \di t
+	=&\frac{1}{3!}\int_0^x \left(x-t\right)^3 t^2 \di t\\
+	=&\frac{1}{6}\int_0^x \left(x^3 - 3x^2t + 3xt^2 - t^3\right)t^2 \di t \\
+	=&\frac{1}{6}\int_0^x x^3t^2 - 3x^2t^3 + 3xt^4 - t^5 \di t \\
+	=&\frac{1}{6} \Eval{\frac{x^3t^3}{3} - \frac{3x^2t^4}{4} + \frac{3xt^5}{5} - \frac{t^6}{6}}{0}{x} \\
+	=&\frac{1}{6} \left(\frac{1}{3}x^6 - \frac{3}{4} x^6 + \frac{3}{5} x^6 - \frac{1}{6}x^6 \right) \\
+	=&\frac{1}{6} \left(\frac{x^6}{60} \right) \\
+	=&\frac{x^6}{360}
+\end{flalign*}
 
 The results are the same and thus the formula seems to hold for a simple
 function. However, one may realise that the second solution is in fact longer
@@ -280,16 +296,18 @@ much more evident, for instance in the example of $D^{-3} \sin{x}$, where
 $\iiint \sin{x} \di x$ is rather easy to evaluate because of the simplicity and
 cyclical nature of its antiderivatives, whereas $\frac{1}{2}\int
 \left(x-t\right)^2 \sin t\di t$ involves much more work and complex
-techniques. This is a result of the fact that integrals many times become much
-more difficult to evaluate when more terms are introduced. Thus, despite the
-fact that this compresseses the work needed to be done to one integral, the
-complexity is much greater.
+techniques. This is a result of the fact that integrals tend to become more
+complex to evaluate when more terms are introduced. Thus, despite the fact that
+this compresseses the work needed to be done to one integral, the complexity is
+much greater.
 
 This means that Cauchy's formula is in fact, not a practical way to calculate
-negative order derivatives, even though it seems like it would be. Cauchy's
-formula however has other uses cases, in places like applied mathematics for
-calculating integrals numerically for instance, but most importantly for this
-exploration, this formula can be generalised for non-integer integrals.
+negative order derivatives in most situations, even though it seems like it
+would be. Cauchy's formula however has other uses cases, in places like applied
+mathematics for calculating integrals numerically in multi-variable calculus
+for instance, which are outside the scope of this exploration, but most
+importantly for this exploration, this formula can be generalised for
+non-integer integrals.
 
 \subsection{Generalising Cauchy's integral formula for $x \in \mathbb{R}$}
 
@@ -301,36 +319,224 @@ This is true, as it is possible, however, a slight consideration must be made.
 The formula for repeated integration is thus
 
 $$
-D^{-n}f = \frac{1}{n!}\int_a^{t_1}\left(t_1-t\right)^nf(t)\di t
+D^{-n}f(x) = \frac{1}{(n-1)!}\int_a^{x}\left(x-t\right)^{n-1}f(t)\di t
 $$
 
 However, if one tries to substitute something that is not a positive integer
 for n, one comes across the problem of having to evaluate
-$\frac{1}{n!}$. Generalising factorials to all $\mathbb{R}$ is complex, involving
-techniques in real analysis. However, since this is not the focus of this exploration,
-I will use the result without proving it. This generalisation is named $\Gamma(x)$, and its formula is given as
+$\frac{1}{(n-1)!}$. Generalising factorials to all $\mathbb{R}$ is complex,
+involving techniques in real analysis. However, since this is not the focus of
+this exploration, I will use the result without proving it. This generalisation
+is named $\Gamma(x)$, and its formula is given as
 $$
 \Gamma(x)=\int_0^{\infty} e^{-t}t^{x-1}dt = (x-1)!
 $$
 Having this function, we can thus express the formula for repeated integration as
 $$
-D^{-\alpha}f = \frac{1}{\Gamma\left(\alpha+1\right)}\int_a^{t_1}\left(t_1-t\right)^\alpha f(t)\di t
+D^{-\alpha}f(x) = \frac{1}{\Gamma\left(\alpha\right)}\int_a^{x}\left(x-t\right)^{\alpha-1} f(t)\di t
 $$
 
-Having this, we can now define fractional calculus.
+Having this, we can now define fractional calculus and its main operator,
+the differintegral.
 
 
 \section{Fractional calculus}
 \subsection{The differintegral operator}
 Having defined a way to take integrals a non-integral number of times, we can
-now define an operator that can ``take the derivative $\alpha$ times'', where
-$\alpha$ could be any real number
+now define an operator that can ``take the derivative $x$ times'', where
+$x$ could be any real number
 
 This could be first approached by saying that, to take $D^2$ for instance, we
 may take $D^{-\left(-2\right)}$ and evaluate using Cauchy's formula. However,
 this does not work, as when trying to evaluate $\Gamma(-1)$, we find that it is
 not defined. This is true for all negative integers, and thus we must define an
 operator that can properly take these derivatives.
+
+To do this, it is useful to split all numbers into their integer and
+non-integral parts. To start with, we consider a positive number $x \in
+\mathbb{R}$, which we split into its integer and its fractional part: $x = n +
+\alpha, \quad n \in \mathbb{Z}^+, \squad 0 \leq \alpha < 1$, which is the
+decomposition of the number as its integer and real part. Therefore, we could
+write $D^x=D^nD^\alpha$, by the property discussed in the previous
+section. This is very useul because $D^n$ is simply the nth derivative, which
+is simply defined as the repetition of derivatives, and additionally $D^\alpha$
+can be calculated using Cauchy's formula, and therefore we reach the result:
+
+\begin{align*}
+	D^x f   &= \frac{d^n}{dx^n} D^\alpha f \\
+			&= \frac{d^n}{dx^n} \frac{1}{\Gamma\left(\alpha\right)}
+			 \int_a^x (x-t)^{\alpha-1} f(t) \di t
+\end{align*}
+
+This same working may also be used for negative numbers: $x = n + \alpha \quad
+\alpha,n < 0$, using either Cauchy's Formula or a manual method to compute the
+integral $n$ times.
+
+\begin{align*}
+	D^x f   &= D^{-n} D^\alpha f \\
+			&= \frac{1}{(n-1)!} \int_a^x (x-t)^{n-1}
+			 \left(\frac{1}{\Gamma\left(\alpha\right)}
+			 \int_0^t (t-\omega)^{\alpha - 1} f(\omega) \di \omega\right)\di t
+\end{align*}
+
+This may be condensed into a single operator, for both negative and positive
+numbers:
+\begin{equation*}
+	D^\alpha f(x) =
+	\begin{cases}
+		\frac{d^n}{dx^n} D^{\alpha - n} f(x)
+		& \text{if } \alpha \geq 1, \text{where } n = \floor{\alpha}\\
+
+		I^{-n}D^{\alpha - n} f(x)
+		& \text{if } \alpha \leq -1, \text{where } n = \ceil{\alpha} \\
+
+		\frac{d}{dt} \frac{1}{\Gamma\left(\alpha\right)} \int_a^x (x-t)^{\alpha-1} f(t) \di t
+		& \text{if } 0 < \alpha < 1 \\
+
+		\frac{1}{\Gamma\left(\alpha\right)} \int_a^x (x-t)^{\alpha-1} f(t) \di t
+		& \text{if } -1 < \alpha < 0 \\
+
+		f(x) & \text{if } \alpha = 0
+	\end{cases}
+\end{equation*}
+
+Where $I^n$ represents the $n$-th integral, which as discussed previously may
+be calculated using several methods, like Cauchy's method or manually. The
+above method of defining fractional integrals is known as the Riemann-Liouville
+integral. (should I cite this?)
+
+For instance,
+$$
+D^{\frac{11}{4}} f = D^{2+\frac{3}{4}}
+				 = \frac{d^2}{dx^2}\frac{1}{\Gamma\left(\frac{3}{4}\right)}
+				 \frac{d}{dx} \int_a^x\left(x-t\right)^{-\frac{1}{4}} f(t) \di t
+$$
+
+and
+
+$$
+D^{-\frac{13}{3}} f = D^{-4-\frac{1}{3}}
+					= I^4 \frac{1}{\Gamma\left(-\frac{1}{3}\right)} \int_a^x \left(x-t\right)^{-\frac{4}{3}} f(t) \di t
+$$
+
+This provides an easy and algorithmic way to calculate the $\alpha$ derivative
+of a function, leaving only the inner integral to calculate, which depends on
+the function. In the following section, some example derivatives will be
+calculated.
+
+\subsection{Examples}
+
+To begin with, I will calculate the most simple fraction for the derivative
+power, the $\frac{1}{2}$ power, as this is ``the first'' fraction, as it is the
+first fraction of the form $\frac{1}{n}$ that is not an integer, and the
+function $x^2$, as integer derivatives of polynomials are simple.
+
+$$
+D^{\frac{1}{2}} \left(x^n\right) = \frac{d}{dx} \frac{1}{\Gamma\left(\frac{1}{2}\right)} \int_a^x \left(x-t\right)^{-\frac{1}{2}} t^2 \di t
+$$
+
+For this purpose, $\Gamma\left(-\frac{1}{2}\right)$ needs to be known, and this
+value is a special value of the gamma function, whose calculation is outside
+out of the scope of this investigation, but nevertheless gives
+$\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}$.
+
+\begin{flalign*}
+	&\frac{d}{dx} \frac{1}{\sqrt{\pi}} \int_a^x \frac{t^2}{\left(x-t\right)^{\frac{1}{2}}} \di t \\
+	&\IntSub{
+		\text{let } u&=x-t \\
+			du&=-dt \\
+			t \to a &\implies u \to x-a \\
+			t \to x &\implies u \to 0
+	} \\
+	&=\frac{d}{dx}\frac{-1}{\sqrt{\pi}} \int_{x-a}^0 \frac{\left(x-u\right)^2}{u^{\frac{1}{2}}} \di u && \\
+	&= \frac{d}{dx}\frac{-1}{\sqrt{\pi}} \int_{x-a}^0 \frac{x^2-2xu+u^2}{u^{\frac{1}{2}}} \di u && \\
+	&= \frac{d}{dx}\frac{1}{\sqrt{\pi}} \int_0^{x-a} x^2u^{-\frac{1}{2}}-2xu^{\frac{1}{2}}+u^{\frac{3}{2}} \di u && \\
+	&= \frac{d}{dx}\frac{1}{\sqrt{\pi}} \Eval{2x^2u^{\frac{1}{2}}-\frac{4}{3}xu^{\frac{3}{2}}+\frac{2}{5}u^{\frac{5}{2}}}{u=0}{u=x-a} && \\
+	&= \frac{d}{dx}\frac{1}{\sqrt{\pi}} \left(2x^2\left(x-a\right)^{\frac{1}{2}}-\frac{4}{3}x\left(x-a\right)^{\frac{3}{2}}+\frac{2}{5}\left(x-a\right)^{\frac{5}{2}}\right) && \\
+	&= \frac{1}{\sqrt{\pi}} \left(4x\left(x-a\right)^{\frac{1}{2}} +
+								  \frac{x^2}{\left(x-a\right)^{\frac{1}{2}}} -
+								  \frac{4}{3}\left(x-a\right)^{\frac{3}{2}} -
+								  2x\left(x-a\right)^{\frac{1}{2}} +
+\left(x-a\right)^{\frac{3}{2}}\right) && \\
+									  &&
+\end{flalign*}
+
+This answer, in contrast to the usual derivative of $x^2$, this answer is
+complex, and involves the constant $\frac{1}{\sqrt{\pi}}$. However, one of the
+reasons for this complexity is the generic parameter $a$, which represents a
+``starting point'' for the integration. Assigning it the value $a=0$ yields the following, much
+simpler answer
+\begin{align*}
+	&\frac{1}{\sqrt{\pi}} \Eval{\left(4x\left(x-a\right)^\frac{1}{2} +
+							   \frac{x^2}{\left(x-a\right)^\frac{1}{2}} -
+							   \frac{4}{3}\left(x-a\right)^\frac{3}{2} -
+							   2x\left(x-a\right)^\frac{1}{2} +
+						       \left(x-a\right)^\frac{3}{2}\right)}
+							   {a=0}{s}\\
+	&=\frac{1}{\sqrt{\pi}} \left(4x\cdot\left(x\right)^\frac{1}{2} +
+							   \frac{x^2}{x^\frac{1}{2}} -
+							   \frac{4}{3}x^\frac{3}{2} -
+							   2x \cdot x^\frac{1}{2} +
+						       x^\frac{3}{2}\right) \\
+	&=\frac{1}{\sqrt{\pi}} \left(4x^\frac{3}{2} +
+								 x^\frac{3}{2}-
+							     \frac{4}{3}x^{\frac{3}{2}} -
+								 2x^\frac{3}{2} +
+						         x^\frac{3}{2}\right) \\
+	&=\frac{8}{3\sqrt{\pi}} x^\frac{3}{2}
+\end{align*}
+
+This is therefore, one of the possible half derivatives of $x^2$, as it
+corresponds to one possible value of $a$. Moreover, because of the derivative rules
+discussed above, it should be true that $D^\frac{1}{2}\frac{8}{3\sqrt{\pi}} x^\frac{3}{2} = 2x$,
+as $D^\frac{1}{2}D^\frac{1}{2}x^2=D^{\frac{1}{2} + \frac{1}{2}} x^2=D x^2 = 2x$
+
+Therefore, using the same method as above, we calculate the next half derivative.
+\begin{align*}
+	\frac{d}{dx}&D^\frac{1}{2} \frac{8}{3\sqrt{\pi}} x^\frac{3}{2} \\
+	=&\frac{d}{dx}\frac{1}{\sqrt{\pi}} \frac{8}{3\sqrt{\pi}} \int_0^x \left(x-t\right)^{-\frac{1}{2}} t^\frac{3}{2} \di t \\
+	=&\frac{d}{dx}\frac{8}{3\pi} \int_0^x \frac{t^\frac{3}{2}}{\left(x-t\right)^\frac{1}{2}} \di t \\
+	 &\IntSub{
+		 \text{let } u &= \sqrt{t} \\
+		\di u &= \frac{1}{2\sqrt{t}} \di t = \frac{1}{2u} \di t \\
+		2u \di u &= \di t \\
+		t \to 0 &\implies u \to 0 \\
+		t \to x &\implies u \to x
+	} \\
+	=&\frac{d}{dx}\frac{8}{3\pi} \int_0^{\sqrt{x}} \frac{u^3 \cdot 2u}{\sqrt{x-u^2}} \di u \\
+	=&\frac{d}{dx}\frac{16}{3\pi} \int_0^{\sqrt{x}} \frac{u^4}{\sqrt{x-u^2}} \di u \\
+\end{align*}
+
+Because of the square root in the denominator, with a $x-u^2$, we should use a trigonometric
+substitution to solve this, as such:
+\begin{align*}
+	 &\IntSub{
+		 \text{let } u &= \sqrt{x}\sin{w} \\
+		 \di u &= \sqrt{x}\cos{w} \di w \\
+		 u \to 0 &\implies w \to 0 \\
+		 u \to \sqrt{x} &\implies w \to \frac{\pi}{2} \\
+	 } \\
+	=&\frac{d}{dx}\frac{16}{3\pi} \int_0^{\frac{\pi}{2}} \frac{x^2\sin^4w\cdot \sqrt{x}\cos{w}}{\sqrt{x\left(1-\sin^2w\right)}} \di w \\
+	=&\frac{d}{dx}\frac{16}{3\pi} \int_0^{\frac{\pi}{2}} \frac{x^2\sin^4w\cdot \sqrt{x}\cos{w}}{\sqrt{x}\cos w} \di w \\
+	=&\frac{d}{dx}\frac{16x^2}{3\pi} \int_0^{\frac{\pi}{2}} \sin^4w \di w \\
+	=&\frac{32x}{3\pi} \int_0^{\frac{\pi}{2}} \sin^4w \di w \\
+\end{align*}
+
+Because of how the integral is independent of the value of $x$, we can take the
+$x$ term out, and evaluate the integral on its own. The value of this integral
+is calculable using some substitutions, but the calculation of this integral is
+outside of the scope of this investigation. Therefore, the value of this
+integral will be taken as a given and not proven. The value of this integral is
+$\frac{3\pi}{16}$, and therefore we may calculate the previous derivative.
+
+\begin{align*}
+	&\frac{32x}{3\pi} \int_0^{\frac{\pi}{2}} \sin^4w \di w \\
+	=&\frac{32x}{3\pi} \frac{3\pi}{16} \\
+	=&\frac{32x\cdot3\pi}{16\cdot 3\pi} \\
+	=&2x
+\end{align*}
+The result is what is expected, as applying the half derivative twice resulted
+in the same output as the original derivative
 
 \subsection{Properties of fractional derivatives}
 \subsection{Graphical interpretations of fractional derivatives}
