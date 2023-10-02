@@ -9,8 +9,22 @@
 \usepackage{setspace}
 \usepackage{mathtools}
 \usepackage{helvet}
+\usepackage{pgfplots}
+\usepackage{float}
+\usepackage[section]{placeins}
+\pgfplotsset{compat = newest}
 \usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
 
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\allowdisplaybreaks
 
 \author{Guzmán Zugnoni}
 \title{Non-integer order derivatives}
@@ -40,7 +54,6 @@
 		#1
 \end{aligned}}
 }
-
 
 \begin{document}
 \maketitle
@@ -72,7 +85,7 @@ there existed a similar notion regarding derivatives.
 My focus in this exploration is going to be to find a way to generalise
 higher-order derivatives to all $\mathbb{R}$, and not only $\mathbb{Z}_{\geq0}$.
 
-\section{Negative order derivatives}
+\section{Negative order derivatives} \label{neg_order_ders}
 
 The most natural order to start defining non-integral derivatives is the same
 order in which non-integer exponents are first learned: exponentiating to
@@ -161,9 +174,9 @@ $$
 
 And performing the process of integration again will result in an even more
 complicated result, with which performing repeated integration becomes
-exponentially harder. Therefore, there is motivation to find a suitable
-alternative to performing the integral every time, and a method to do this is
-known as Cauchy's formula for repeated integration.
+increasingly harder every time. Therefore, there is motivation to find a
+suitable alternative to performing the integral every time, and a method to do
+this is known as Cauchy's formula for repeated integration.
 
 \section{Cauchy's formula for repeated integration}
 
@@ -190,7 +203,7 @@ sake of ease, I will assume appropiate initial conditions such that all
 constant of integration will be $0$.
 
 
-\subsection{Proof for $n \in \mathbb{Z}$}
+\subsection{Proof for \texorpdfstring{$n \in \mathbb{Z}$}{n in Z}}
 
 This may be proven for $n \in \mathbb{Z}^+$ by induction, for an arbitrary
 integrable function $f$. The base case is n=1, where it should simply be equal
@@ -238,11 +251,11 @@ $$
 The $f(t)$ term is included in the derivative, as it is a constant in terms of
 $t_1$. This expression is very similar to the Fundamental Theorem of Calculus,
 which states:
-\begin{equation}
-	\label{fundamental_theorem_of_calculus}
+$$
 \frac{\di}{\di x}\int_a^bf(x)\di x = \int_a^b\frac{\di}{\di x}f(x) \di x = f(b)- f(a)
-\end{equation}
-Applying (\ref{fundamental_theorem_of_calculus}) results in the expression becoming
+$$
+
+Applying the Fundamental Theorem of Calculus results in the expression becoming
 \begin{gather*}
 \int_a^x
 \frac{1}{(k-1)!}\frac{\di}{\di t_1}\left[\int_a^{t_1}\frac{1}{n}\left(t_1-t\right)^k f(t)\di t\right]\di t_1 \\
@@ -253,7 +266,7 @@ Applying (\ref{fundamental_theorem_of_calculus}) results in the expression becom
 \int_a^x
 \frac{\di}{\di t_1}\left[\frac{1}{k!}\int_a^{t_1}\left(t_1-t\right)^k f(t)\di t\right]\di t_1
 \end{gather*}
-Applying(\ref{fundamental_theorem_of_calculus}) again eliminates the outer integral,
+Applying the Fundamental Theorem of Calculus again eliminates the outer integral,
 and results in
 $$
 \frac{1}{k!}\int_a^x\left(x-t\right)^k f(t)\di t -
@@ -303,17 +316,18 @@ much greater.
 
 This means that Cauchy's formula is in fact, not a practical way to calculate
 negative order derivatives in most situations, even though it seems like it
-would be. Cauchy's formula however has other uses cases, in places like applied
-mathematics for calculating integrals numerically in multi-variable calculus
-for instance, which are outside the scope of this exploration, but most
-importantly for this exploration, this formula can be generalised for
-non-integer integrals.
+would be. Cauchy's formula, however, can be applied in other areas of
+mathematics, like applied mathematics for calculating integrals numerically in
+multi-variable calculus for instance, which are outside the scope of this
+exploration. In addition, Cauchy's formula has one particular use that this exploration
+is interested in, and that is the ability to use it to extend repeated integration
+to non-integer iterations.
 
-\subsection{Generalising Cauchy's integral formula for $x \in \mathbb{R}$}
+\subsection{Generalising Cauchy's integral formula for \texorpdfstring{$x \in \mathbb{R}$}{x in R}}
 
-Now that an easy way to perform the inverse of a derivative has been
-established, it is reasonable to assume that this might make it possible to
-extend this operation to all reals.
+Now that a generalisation of performing the inverse of a derivative a number of
+times has been established, it is reasonable to assume that this might make it
+possible to extend this operation to all reals.
 
 This is true, as it is possible, however, a slight consideration must be made.
 The formula for repeated integration is thus
@@ -336,7 +350,19 @@ $$
 D^{-\alpha}f(x) = \frac{1}{\Gamma\left(\alpha\right)}\int_a^{x}\left(x-t\right)^{\alpha-1} f(t)\di t
 $$
 
-Having this, we can now define fractional calculus and its main operator,
+Before continuining, it is important to clarify how this helps the goal of this
+exploration, as the exploration intended to find a way to take fractional
+derivatives, and we have only found a way to take fractional integrals.
+
+However, a way to find fractional derivatives from integrals is very easy to
+define. For instance, if we want to find $D^\frac{1}{2}$, we may re-write this
+as $D^1D^{-\frac{1}{2}}$, by the properties discussed in section
+\ref{neg_order_ders}, as $\frac{1}{2}=1+\left(-\frac{1}{2}\right)$. Moreover,
+we know how to calculate both operators in the second equation, as $D^1$ is
+just the first derivative, and $D^{-\frac{1}{2}}$ can be calculated with the
+method discussed in this section.
+
+Having said this, we can now define fractional calculus and its main operator,
 the differintegral.
 
 
@@ -346,15 +372,16 @@ Having defined a way to take integrals a non-integral number of times, we can
 now define an operator that can ``take the derivative $x$ times'', where
 $x$ could be any real number
 
-This could be first approached by saying that, to take $D^2$ for instance, we
-may take $D^{-\left(-2\right)}$ and evaluate using Cauchy's formula. However,
-this does not work, as when trying to evaluate $\Gamma(-1)$, we find that it is
-not defined. This is true for all negative integers, and thus we must define an
-operator that can properly take these derivatives.
+One way to approach this is that, to take $D^2$ for instance, we may take
+$D^{-\left(-2\right)}$ and evaluate using Cauchy's formula. However, this does
+not work, as when trying to evaluate $\Gamma(-1)$ when substituting into the
+formula, we find that it is not defined. In addition, $\Gamma$ is not defined
+for any negative integer and thus we must define an operator that can take
+these derivatives another way.
 
 To do this, it is useful to split all numbers into their integer and
 non-integral parts. To start with, we consider a positive number $x \in
-\mathbb{R}$, which we split into its integer and its fractional part: $x = n +
+\mathbb{R}^+$, which we split into its integer and its fractional part: $x = n +
 \alpha, \quad n \in \mathbb{Z}^+, \squad 0 \leq \alpha < 1$, which is the
 decomposition of the number as its integer and real part. Therefore, we could
 write $D^x=D^nD^\alpha$, by the property discussed in the previous
@@ -424,7 +451,14 @@ of a function, leaving only the inner integral to calculate, which depends on
 the function. In the following section, some example derivatives will be
 calculated.
 
-\subsection{Examples}
+However, it is important to note that the fractional derivatives depend on the
+variable $a$, which is a constant when taking the integral. This constant is
+akin to the constant of integration which is gained when performing normal
+integration, introducing an infinite number of possible fractional derivatives.
+However, because of the structure of the integral, this constant does not behave
+exactly like the normal constant of integration. This will be explored further in subsection \ref{nonlocality}
+
+\subsection{Calculation examples}
 
 To begin with, I will calculate the most simple fraction for the derivative
 power, the $\frac{1}{2}$ power, as this is ``the first'' fraction, as it is the
@@ -458,7 +492,6 @@ $\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}$.
 								  \frac{4}{3}\left(x-a\right)^{\frac{3}{2}} -
 								  2x\left(x-a\right)^{\frac{1}{2}} +
 \left(x-a\right)^{\frac{3}{2}}\right) && \\
-									  &&
 \end{flalign*}
 
 This answer, in contrast to the usual derivative of $x^2$, this answer is
@@ -472,7 +505,7 @@ simpler answer
 							   \frac{4}{3}\left(x-a\right)^\frac{3}{2} -
 							   2x\left(x-a\right)^\frac{1}{2} +
 						       \left(x-a\right)^\frac{3}{2}\right)}
-							   {a=0}{s}\\
+							   {a=0}{}\\
 	&=\frac{1}{\sqrt{\pi}} \left(4x\cdot\left(x\right)^\frac{1}{2} +
 							   \frac{x^2}{x^\frac{1}{2}} -
 							   \frac{4}{3}x^\frac{3}{2} -
@@ -486,7 +519,7 @@ simpler answer
 	&=\frac{8}{3\sqrt{\pi}} x^\frac{3}{2}
 \end{align*}
 
-This is therefore, one of the possible half derivatives of $x^2$, as it
+Therefore, this is one of the possible half derivatives of $x^2$, as it
 corresponds to one possible value of $a$. Moreover, because of the derivative rules
 discussed above, it should be true that $D^\frac{1}{2}\frac{8}{3\sqrt{\pi}} x^\frac{3}{2} = 2x$,
 as $D^\frac{1}{2}D^\frac{1}{2}x^2=D^{\frac{1}{2} + \frac{1}{2}} x^2=D x^2 = 2x$
@@ -535,11 +568,216 @@ $\frac{3\pi}{16}$, and therefore we may calculate the previous derivative.
 	=&\frac{32x\cdot3\pi}{16\cdot 3\pi} \\
 	=&2x
 \end{align*}
+
 The result is what is expected, as applying the half derivative twice resulted
-in the same output as the original derivative
+in the same output as the original derivative. However, the general proof of
+this is outside the scope of this exploration.
+
+Moreover, it may be observed that the procedure is similar to when using
+Cauchy's formula, as performing the procedure to reach the result becomes
+increasingly more complex with each term added. Albeit not the same, this is
+similar to our introduction to derivatives in class, as it may be easy to find
+the derivative of $x^2$ using first principles, but when introducing more
+functions, like when taking the derivative of $\sin{\left(x^2+3\right)}$, it
+may be harder to do this using first principles, and we use properties of the
+derivative like the chain rule and product rule to evaluate more complex
+derivatives. Therefore, we are motivated to find if the same properties apply
+for fractional derivatives, and if there exist any others unique to them, to
+make evaluation easier.
+
 
 \subsection{Properties of fractional derivatives}
+
+Firstly, fractional derivatives behave rather differently from normal
+derivatives, despite composing together to form normal derivatives, for
+instance, when taking $D^\frac{1}{2}$ of $f(x)=c, \quad c \in \mathbb{R}$, this
+results in the integral
+$$
+\frac{1}{\sqrt{\pi}} \int_a^x \left(x-t\right)^{-\frac{1}{2}} c \di t
+$$
+
+This integral, when evaluated using the substitution $u=x-t$, results in the
+function $\frac{c}{\sqrt{\pi x}}$. This contradicts normal intuition about
+derivatives, that the derivative of a constant is $0$, which means that there
+may be other intuitions we take about normal derivatives that do not hold for
+fractional derivatives.
+
+\subsubsection{Linearity}
+
+The integer order derivative is said to be linear. That is, $\forall \text{functions} f,g$:
+\begin{itemize}
+	\item{$\frac{d^n}{dx^n} \left(f + g\right) = \frac{d^n}{dx^n} f + \frac{d^n}{dx^n} g$}
+\end{itemize}
+
+\subsubsection{Derivative rules}
+
+For instance, using the same function above as an example, it may be proven by
+contradiction that the product rule does not hold.
+
+Proof: Let $f(x) = 1$ and $g(x) = 1$
+\begin{gather*}
+	D^\frac{1}{2} \left(f \cdot g\right) = D^\frac{1}{2} \left(1 \cdot 1\right) = D^\frac{1}{2} 1 = \frac{1}{\sqrt{\pi x}} \\
+	g \cdot D^\frac{1}{2} f + f \cdot D^\frac{1}{2} g = 1 \cdot \frac{1}{\sqrt{\pi x}} + 1 \cdot \frac{1}{\sqrt{\pi x}} = \frac{2}{\sqrt{\pi x}} \neq \frac{1}{\sqrt{\pi x}}
+\end{gather*}
+
+This is also true for the quotient and chain rules, but these will not be
+proven as the proofs are similar to the previous one. Moreover, there are also
+no viable extensions of these rules to any type of fractional
+derivative. However, there are general rules when it comes to specific
+functions, such as $x^n$ and $\sin x$, which allow calculations of the
+derivatives of those functions.
+
+\subsubsection{Derivatives of specific functions}
+
+Despite there not being a power rule for fractional derivatives, there is an
+analogue to the power rule for fractional derivatives. This rule is derived from
+a rule similar to the power rule, which states
+$$
+\frac{d^k}{dx^k} \left(x^n\right) = \frac{n!}{\left(n-k\right)!} x^{n-k}
+$$
+
+This property is derived from the fact that subsequent derivatives of a power
+function result in more factors of $n!$. This property is extendible to
+fractional derivatives may be used in fractional derivatives as well, however,
+the proof of this is outside the scope of this exploration.
+
+This formula also has factorials, and therefore when using it with fractional
+derivatives, we may use the exact same method we used for Cauchy's formula.
+Therefore, the formula turns into
+$$
+\frac{}{}
+$$
+
 \subsection{Graphical interpretations of fractional derivatives}
-\subsubsection{Non-locality}
+
+\begin{figure}[H]
+\def\figonexmax{15}
+\centering
+\begin{tikzpicture}[scale = 1.3]
+    \begin{axis}[
+		xmin = 0,
+		xmax = \figonexmax,
+		grid = both,
+		major grid style = {lightgray},
+		minor grid style = {lightgray!25},
+		samples = 300,
+		legend pos = north west,
+	]
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			blue,
+		] { x^2 };
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			densely dotted,
+			green
+		] {1.24 * x^(7/4)};
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			densely dotted,
+			orange
+		] { (8/(3*sqrt(pi)))*x^(3/2) };
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			densely dotted,
+			cyan
+		] {1.765 * x^(5/4)};
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			red
+		] { 2*x };
+
+	\addlegendentry{$x^2$}
+	\addlegendentry{$D^\frac{3}{4}x^2$}
+	\addlegendentry{$D^\frac{2}{4}x^2$}
+	\addlegendentry{$D^\frac{1}{4}x^2$}
+	\addlegendentry{$2x$}
+    \end{axis}
+\end{tikzpicture}
+\caption{A graph of $x^2$ and its $\frac{1}{4}$ order derivatives, up to order $1$} \label{xsquaredgraph}
+\end{figure}
+
+In Figure \ref{xsquaredgraph}, we can see the graph of some fractional order
+derivatives of $x^2$, approximated using technology. The picture shows how
+these graphs fit between $x^2$ and its first order derivative, and moreover
+how, as the order of the derivative increases, the graph gets closer to first
+derivative. This is analogous to how the motivation for this investigation,
+powers, work, as the graph of $x^\frac{3}{2}$ fits between $x^1$ and $x^2$,
+which shows the parallels between these derivatives and normal exponents.
+
+This is not only the case for polynomials, as this property is also true with
+trigonometric functions as well.
+
+\begin{figure}[H]
+\def\figtwoxmax{15}
+\centering
+\begin{tikzpicture}[scale = 1.3]
+    \begin{axis}[
+		xmin = 0,
+		xmax = \figtwoxmax,
+		grid = both,
+		major grid style = {lightgray},
+		minor grid style = {lightgray!25},
+		samples = 300,
+		legend pos = north west,
+	]
+		\addplot[
+			domain = 0:\figtwoxmax,
+			smooth,
+			thick,
+			blue,
+		] { sin(x) };
+		\addplot[
+			domain = 0:\figtwoxmax,
+			smooth,
+			thick,
+			densely dotted,
+			green
+		] { 0 };
+		\addplot[
+			domain = 0:\figtwoxmax,
+			smooth,
+			thick,
+			densely dotted,
+			orange
+		] { 0 };
+		\addplot[
+			domain = 0:\figtwoxmax,
+			smooth,
+			thick,
+			densely dotted,
+			cyan
+		] { 0 };
+		\addplot[
+			domain = 0:\figtwoxmax,
+			smooth,
+			thick,
+			red
+		] { cos(x) };
+
+	\addlegendentry{$\sin{x}$}
+	\addlegendentry{$D^\frac{3}{4}\sin{x}$}
+	\addlegendentry{$D^\frac{2}{4}\sin{x}$}
+	\addlegendentry{$D^\frac{1}{4}\sin{x}$}
+	\addlegendentry{$\cos{x}$}
+    \end{axis}
+\end{tikzpicture}
+\caption{A graph of $\sin{x}$ and its $\frac{1}{4}$ order derivatives, up to order $1$} \label{singraph}
+\end{figure}
+
+These functions were also approximated using technology. As the process of arriving
+at the resulting integral is complex
+
+\subsection{Non-locality} \label{nonlocality}
 
 \end{document}
