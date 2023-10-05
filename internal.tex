@@ -1,19 +1,23 @@
 \documentclass{article}
 
 \usepackage[a4paper,margin=1in]{geometry}
-\usepackage{titling}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{setspace}
-\usepackage{mathtools}
-\usepackage{helvet}
-\usepackage{pgfplots}
 \usepackage{float}
+\usepackage{helvet}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\usepackage{setspace}
+\usepackage{titling}
+\usepackage{url}
 \usepackage[section]{placeins}
 \pgfplotsset{compat = newest}
 \usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
+
+\usepackage[backend=biber,style=apa]{biblatex}
+\addbibresource{citations.bib}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -21,7 +25,7 @@
     citecolor=black,
     filecolor=black,
     linkcolor=black,
-    urlcolor=black
+    urlcolor=blue,
 }
 
 \allowdisplaybreaks
@@ -430,9 +434,13 @@ numbers:
 \end{equation*}
 
 Where $I^n$ represents the $n$-th integral, which as discussed previously may
-be calculated using several methods, like Cauchy's method or manually. The
-above method of defining fractional integrals is known as the Riemann-Liouville
-integral. (should I cite this?)
+be calculated using several methods, like Cauchy's method or manually.
+
+The above method of defining fractional integrals is equivalent to the original
+formulation of a ``fractional antiderivative'', which is known as the
+Riemann-Liouville integral. This original formulation was proposed by Joseph
+Liouville, and it was also named after Bernard Riemann for his contributions to
+the study of integrals. (\cite{lizorkin2020})
 
 For instance,
 $$
@@ -528,7 +536,7 @@ as $D^\frac{1}{2}D^\frac{1}{2}x^2=D^{\frac{1}{2} + \frac{1}{2}} x^2=D x^2 = 2x$
 
 Therefore, using the same method as above, we calculate the next half derivative.
 \begin{align*}
-	\frac{d}{dx}&D^\frac{1}{2} \frac{8}{3\sqrt{\pi}} x^\frac{3}{2} \\
+	&D^\frac{1}{2} \frac{8}{3\sqrt{\pi}} x^\frac{3}{2} \\
 	=&\frac{d}{dx}\frac{1}{\sqrt{\pi}} \frac{8}{3\sqrt{\pi}} \int_0^x \left(x-t\right)^{-\frac{1}{2}} t^\frac{3}{2} \di t \\
 	=&\frac{d}{dx}\frac{8}{3\pi} \int_0^x \frac{t^\frac{3}{2}}{\left(x-t\right)^\frac{1}{2}} \di t \\
 	 &\IntSub{
@@ -616,29 +624,6 @@ This is one property that does hold for fractional derivatives as well. This
 property is trivially proven, using the linearity of integrals and derivatives,
 and the definition of the differintegral operator.
 
-%Proof: Let $\alpha \in \mathbb{R}$
-%
-%\begin{itemize}
-%	\item{Case 1: $0 < \alpha < 1$
-%			\begin{flalign*}
-%				D^\alpha \left(f+g\right) &= \frac{d}{dt} \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} \left(f(t)+g(t)\right) \di t \\
-%										  &= \frac{d}{dt} \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} f(t) + \left(x-t\right)^{\alpha - 1} g(t) \di t \\
-%										  &= \frac{d}{dt} \frac{1}{\Gamma(\alpha)} \left(\int_a^x \left(x-t\right)^{\alpha - 1} f(t) \di t + \int_a^x \left(x-t\right)^{\alpha - 1} g(t) \di t\right) \\
-%										  &= \frac{d}{dt} \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} f(t) \di t + \frac{d}{dt} \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} g(t) \di t \\
-%										  &= D^\alpha f + D^\alpha g
-%		\end{flalign*}
-%		}
-%	\item{Case 2: $-1 < \alpha < 0$
-%			\begin{flalign*}
-%				D^\alpha \left(f+g\right) &= \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} \left(f(t)+g(t)\right) \di t \\
-%										  &= \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} f(t) + \left(x-t\right)^{\alpha - 1} g(t) \di t \\
-%										  &= \frac{1}{\Gamma(\alpha)} \left(\int_a^x \left(x-t\right)^{\alpha - 1} f(t) \di t + \int_a^x \left(x-t\right)^{\alpha - 1} g(t) \di t\right) \\
-%										  &= \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} f(t) \di t + \frac{d}{dt} \frac{1}{\Gamma(\alpha)} \int_a^x \left(x-t\right)^{\alpha - 1} g(t) \di t \\
-%										  &= D^\alpha f + D^\alpha g
-%		\end{flalign*}
-%		}
-%\end{itemize}
-
 \subsubsection{Derivative rules}
 
 For instance, using the same function above as an example, it may be proven by
@@ -667,19 +652,27 @@ fractional derivative relationships is made clearer. A more detailed
 description of the effect of parameter $a$ is made in section
 \ref{nonlocality}.
 
-\textbf{Power functions}
+\textbf{Polynomial functions}
 
-Despite there not being a power rule for fractional derivatives, there is an
-analogue to the power rule for fractional derivatives. This rule is derived from
-a rule similar to the power rule, which states
+Polynomial functions are the most basic type of function, and the first one we
+learnt to derive in our IB course. Therefore, we will discuss this type of
+functions first. Despite the normal power rule not being valid for fractional
+derivatives, as seen in the example presented above when taking the derivative
+of $1$, there is an analogue to the power rule for fractional derivatives. This
+rule is derived from a rule similar to the power rule that works for normal
+derivatives, which states
 $$
 \frac{d^k}{dx^k} \left(x^n\right) = \frac{n!}{\left(n-k\right)!} x^{n-k}
 $$
+(\cite{ozaner2018})
 
-This property is derived from the fact that subsequent derivatives of a power
-function result in more factors of $n!$. This property is extendible to
-fractional derivatives may be used in fractional derivatives as well, however,
-the proof of this is outside the scope of this exploration.
+This property is derived from the fact that you take the first $k$ terms of
+$n!$.
+
+This property is extendible to fractional derivatives and may be used when
+calculating them. However, the proof that this works is outside the scope of
+this exploration, as we are focusing mainly on the intuition behind fractional
+derivatives, and how they relate to normal derivatives.
 
 This formula also has factorials, just like Cauchy's formula, and therefore
 when using it with fractional derivatives, we may use the exact same method we
@@ -697,6 +690,7 @@ following
 \frac{d^n}{dx^n} \sin{x} = \sin\left(x + \frac{n\pi}{2}\right) \\
 \frac{d^n}{dx^n} \cos{x} = \cos\left(x + \frac{n\pi}{2}\right)
 \end{gather*}
+(\cite{simplybeautifulart2016})
 
 Naturally, this may also be extended to fractional calculus, although again
 this will not be proven, as the proof of this fact requires complex
@@ -704,9 +698,27 @@ calculations.
 
 Therefore, we have
 \begin{gather*}
-\frac{d^\alpha}{dx^\alpha} \sin{x} = \sin\left(x + \frac{\alpha\pi}{2}\right) \\
-\frac{d^\alpha}{dx^\alpha} \cos{x} = \cos\left(x + \frac{\alpha\pi}{2}\right)
+D^\alpha \left(\sin{x}\right) = \sin\left(x + \frac{\alpha\pi}{2}\right) \\
+D^\alpha \left(\cos{x}\right) = \cos\left(x + \frac{\alpha\pi}{2}\right)
 \end{gather*}
+
+\textbf{Exponential functions}
+
+Finally, the last ``common'' type of function that we encounter in our IB
+course is the exponential function $e^x$. Just like the other functions, we
+have a properety of normal derivatives that can be extended to the fractional
+derivatives. This property is
+$$
+\frac{d^n}{dx^n} e^{kx} = k^ne^{kx}
+$$
+(\cite{dietrich2023})
+
+Just like both previous types of functions, this property can be used for
+fractional derivatives, even though we will not prove that this is the case.
+When generalising this, we get the equation
+$$
+D^\alpha \left(e^{kx}\right) = k^\alpha e^{k\alpha}
+$$
 
 \subsection{Graphical interpretations of fractional derivatives}
 
@@ -836,21 +848,159 @@ trigonometric functions as well.
 
 These functions are being calculated using the identities discussed in section
 \ref{der_examples}. Just like the polynomial case above, the fractional
-derivative "interpolates" between the function and its derivative. Every
+derivative ``interpolates'' between the function and its derivative. Every
 fractional derivative represents a state between the function and its
 derivative, and eventually reaches the first order derivative.
 
+\begin{figure}[H]
+\def\figonexmax{15}
+\centering
+\begin{tikzpicture}[scale = 1.3]
+    \begin{axis}[
+		xmin = 0,
+		xmax = \figonexmax,
+		grid = both,
+		major grid style = {lightgray},
+		minor grid style = {lightgray!25},
+		samples = 300,
+		legend pos = north west,
+	]
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			blue,
+		] { 2^x };
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			densely dotted,
+			green
+		] { 0 };
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			densely dotted,
+			orange
+		] { 0 };
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			densely dotted,
+			cyan
+		] { 0 };
+		\addplot[
+			domain = 0:\figonexmax,
+			smooth,
+			thick,
+			red
+		] { 0 };
+
+	\addlegendentry{$e^{3x}$}
+	\addlegendentry{$D^\frac{1}{4}e^{3x}$}
+	\addlegendentry{$D^\frac{2}{4}e^{3x}$}
+	\addlegendentry{$D^\frac{3}{4}e^{3x}$}
+	\addlegendentry{$3e^{3x}$}
+    \end{axis}
+\end{tikzpicture}
+\caption{A graph of $e^{3x}$ and its $\frac{1}{4}$ order derivatives, up to order $1$} \label{exponentialgraph}
+\end{figure}
+
 One thing that may also be considered is the geometric meaning of the
-fractional derivative. First order derivatives show the slope at a point, and
-second order derivatives show the concavity of the curve at any point. However,
-we struggle to find geometric meaning in higher order derivatives, and this is
-also the  case for fractional order derivatives. According to <<>>, "there are
-no widely accepted geometric meanings of the fractional derivative."
+fractional derivative, in terms of the original function. First order
+derivatives show the slope at a point, and second order derivatives show the
+concavity of the curve at any point. However, we struggle to find geometric
+meaning in higher order derivatives, as the third derivative does not have a
+commonly known geometric meaning. This is also the case for fractional order
+derivatives, as according to \cite{morphocular2022}, ``despite ordinary
+derivatives and integrals having pretty straightforward geometric and physical
+meanings, it seems no one has come up with a truly satisfying, general
+interpretation of the fractional operators''
 
 \subsection{Non-locality} \label{nonlocality}
-test123
+
+An aspect of fractional derivatives that was thus far not considered in this
+exploration is the value of $a$. Thus far, we have considered the value of
+$a=0$, as it lent to neater formulas for fractional derivatives. However, now
+we will consider what effect this value has on how derivatives are calculated.
+
+At first glance, the value of $a$ may seem akin to the constant of integration,
+$\int f(x) \di x = F(x) + C$, which is just a shift in the answer, that has no
+bearing on the more complex behaviour of the function, like concavity or
+slope. However, when looking at it further, the value of $a$ lends a more
+complex property to fractional derivatives, which is non-locality.
+
+Local operators are those that are affected by ``local'' behaviour of a
+function, that is, behaviour in a surrounding neighbourhood of the point
+considered. For instance, consider the following functions
+$$
+	f(x) =
+	\begin{cases}
+		2x, &\text{if } x < 0 \\
+
+		x^2 + 3x + 5, &\text{if } x \geq 0 \\
+	\end{cases}
+$$
+$$
+	g(x) =
+	\begin{cases}
+		e^x, &\text{if } x < 0 \\
+
+		x^2 + 3x + 5, &\text{if } x \geq 0 \\
+	\end{cases}
+$$
+If we consider the value of $f'(x), \quad x \geq 0$, we may see the following graph:
+
+\begin{figure}[H]
+\def\figmax{10}
+\centering
+\begin{tikzpicture}[scale = 1.2]
+    \begin{axis}[
+		xmin = 0,
+		xmax = \figmax,
+		grid = both,
+		major grid style = {lightgray},
+		minor grid style = {lightgray!25},
+		samples = 300,
+		legend pos = north west,
+	]
+		\addplot[
+			domain = 0:\figmax,
+			smooth,
+			thick,
+			blue,
+		] { 2*x+ 3 };
+
+		\addplot[
+			domain = 0:\figmax,
+			smooth,
+			thick,
+			red,
+			dotted,
+		] { 2*x+ 3 };
+
+	\addlegendentry{$f'(x)$}
+	\addlegendentry{$g'(x)$}
+    \end{axis}
+\end{tikzpicture}
+\caption{A graph of the $f'(x)$} \label{firstderivative}
+\end{figure}
+
+As seen in Figure \ref{firstderivative}, despite the function being defined
+differently before $0$, the value of the derivative is the same, as the first
+derivative is, in fact, local.
+
+However, when using the fractional derivative, in specific, the
+half-derivative, we see a different behaviour
 
 \section{Conclusion}
-test123
+
+\pagebreak
+
+\addcontentsline{toc}{section}{References}
+\printbibliography
 
 \end{document}
