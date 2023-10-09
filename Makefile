@@ -3,8 +3,8 @@
 all: internal.pdf
 
 clean:
-	rm -f citations.bib.bbl
-	rm -f citations.bib.blg
+	rm -f bibliography.bib.bbl
+	rm -f bibliography.bib.blg
 	rm -f internal.aux
 	rm -f internal.bbl
 	rm -f internal.bcf
@@ -18,7 +18,7 @@ clean:
 	rm -f internal.run.xml
 	rm -f internal.toc
 
-internal.pdf: citations.bib internal.tex
+internal.pdf: bibliography.bib internal.tex
 	@pdflatex internal
 	@biber internal
 	@pdflatex internal
