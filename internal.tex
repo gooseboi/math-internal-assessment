@@ -813,12 +813,13 @@ $$
 $$
 	g(x) =
 	\begin{cases}
-		e^x, &\text{if } x < 0 \\
+		x\sin{x}, &\text{if } x < 0 \\
 
 		x^2 + 3x + 5, &\text{if } x \geq 0 \\
 	\end{cases}
 $$
-If we consider the value of $f'(x), \quad x \geq 0$, we may see the following graph:
+If we consider the value of $f'(x), \quad x \geq 0$, we may see the following
+graph:
 
 \begin{figure}[H]
 \centering
@@ -838,6 +839,29 @@ half-derivative, we see a different behaviour.
 \includegraphics[width=\graphscale\textwidth]{graphs/halfderivativenonlocal.pdf}
 \caption{A graph of $D^\frac{1}{2}(f(x))$ and $D^\frac{1}{2} (g(x))$} \label{halfderivativenonlocal}
 \end{figure}
+
+In Figure \ref{halfderivativenonlocal}, $D^\frac{1}{2}_a$ represents the
+half-derivative, with parameter $a$. As can be seen in the graphs, the
+functions are not only ``lifted above'', as they would be in normal
+integration, but their behaviour is changed. Their behaviour after the point
+$x=0$ is changed, depending on the value of $a$. Moreover, the behaviour for
+both functions is different, which shows the fact that this operator is
+non-local.
+
+This non-locality makes it so it is not always easy to calculate the value of a
+fractional derivative, as depending on the value of $a$, all the previous
+behaviour of the function will have to be taken into account.
+
+Finally, one thing that is interesting about this non-locality is how it
+interacts with the composition of these derivatives. For instance, as we saw
+before, when taking the half-derivative twice, we arrive at the normal
+derivative, when $a=0$. However, this is also true for any value of $a$,
+despite the fact that this will not be demonstrated, because of the extremely
+long calculations. Therefore, this means that when combining two non-local
+operators, a local one is generated. This behaviour is contradictory to what
+one would expect, as one would assume that a non-local operator, that depends
+on behaviour outside its neighbourhood, would keep depending on this behaviour
+when composed with other operators.
 
 \section{Conclusion}
 
