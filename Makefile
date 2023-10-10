@@ -11,7 +11,8 @@ internal.pdf: bibliography.bib internal.tex \
 			  graphs/exponentialquarterderivative.pdf \
 			  graphs/sinquarterderivative.pdf \
 			  graphs/polynomialquarterderivative.pdf \
-			  graphs/derivativelocal.pdf
+			  graphs/derivativelocal.pdf \
+			  graphs/halfderivativenonlocal.pdf
 	@lualatex internal
 	@biber internal
 	@lualatex internal

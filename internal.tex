@@ -23,7 +23,7 @@
 \setsansfont{Arial}
 \setmonofont{Arial}
 
-\def\graphscale{0.85}
+\def\graphscale{0.7}
 
 \usepackage[backend=biber,style=apa]{biblatex}
 \addbibresource{bibliography.bib}
@@ -746,7 +746,7 @@ maintained with fractional derivatives.
 	\caption{A graph of $\sin{x}$ and its $\frac{1}{4}$ order derivatives, up to order $1$} \label{polynomialfractionalgraph}
 \end{figure}
 
-In Figure \ref{xsquaredgraph}, we can see the graph of some fractional order
+In Figure \ref{polynomialfractionalgraph}, we can see the graph of some fractional order
 derivatives of $x^2$, approximated using technology. The picture shows how
 these graphs fit between $x^2$ and its first order derivative, and moreover
 how, as the order of the derivative increases, the graph gets closer to first
@@ -834,41 +834,9 @@ However, when using the fractional derivative, specifically in this case the
 half-derivative, we see a different behaviour.
 
 \begin{figure}[H]
-\def\figmax{10}
 \centering
-\begin{tikzpicture}[scale = 1.2]
-    \begin{axis}[
-		xmin = 0,
-		xmax = \figmax,
-		xlabel=$x$,
-		ylabel=$y$,
-		ylabel style = {rotate=-90},
-		grid = both,
-		major grid style = {lightgray},
-		minor grid style = {lightgray!25},
-		samples = 300,
-		legend pos = north west,
-	]
-		\addplot[
-			domain = 0:\figmax,
-			smooth,
-			thick,
-			blue,
-		] { 2*x+ 3 };
-
-		\addplot[
-			domain = 0:\figmax,
-			smooth,
-			thick,
-			red,
-			dotted,
-		] { 2*x+ 3 };
-
-	\addlegendentry{$f'(x)$}
-	\addlegendentry{$g'(x)$}
-    \end{axis}
-\end{tikzpicture}
-\caption{A graph of $D^\frac{1}{2} f(x)$ and $D^\frac{1}{2} g(x)$} \label{halfderivativenonlocal}
+\includegraphics[width=\graphscale\textwidth]{graphs/halfderivativenonlocal.pdf}
+\caption{A graph of $D^\frac{1}{2}(f(x))$ and $D^\frac{1}{2} (g(x))$} \label{halfderivativenonlocal}
 \end{figure}
 
 \section{Conclusion}
